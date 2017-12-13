@@ -40,9 +40,9 @@ TITAN整体由如下5部分子系统构成：
 ----------
 
 ## 文档&协作
-- 文档地址：https://github.com/yunjiweidian/TITAN/wiki；
-- 协作开发：请在master分支上提pull request；
-- 提问题：请在https://github.com/yunjiweidian/TITAN/issues上提issue。
+- 文档地址：https://github.com/yunjiweidian/TITAN/wiki
+- 协作开发：请在master分支上提pull request
+- 提问题：https://github.com/yunjiweidian/TITAN/issues
 
 ----------
  
