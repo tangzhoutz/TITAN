@@ -2,6 +2,9 @@
 
 云集分布式全链路压测军演系统具备强大的分布式压测能力，能够在短时间内发起超大规模的压测流量，使用TITAN能够快速挖掘出业务系统的性能瓶颈，探测出业务系统的真实容量水位，有指导的在大促前进行容量规划，让系统坚如磐石。
 
+- [使用手册](https://)<br>
+- [部署手册](https://)<br>
+
 ----------
 
 ## 功能特点
@@ -34,6 +37,5 @@ TITAN整体由如下5部分子系统构成：
  ## 联系我们
  
 - issues：https://github.com/yunjiweidian/TITAN/issues
-- blog：http://gao-xianglong.iteye.com
 - email：gaoxl@yunjiweidian.com
 - QQ Group：574295338
