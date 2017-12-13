@@ -37,8 +37,6 @@ TITAN整体由如下5部分子系统构成：
 
 ![](http://dl.iteye.com/upload/picture/pic/137639/7880c09c-3490-3358-a4e4-dab919854624.jpg)
 
-除此之外，还依赖于Redis、MySQL、Zookeeper，以及FTPServer等外围系统共同构建起一套完整的，能否在瞬间发起超大规模压测流量的分布式全链路压测军演系统。
-
 ----------
  
  ## 联系我们
