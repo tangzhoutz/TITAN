@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/%20license-GNU%20General%20Public%20License%20v3.0-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.en.html) ![](https://img.shields.io/badge/%20build-passing-brightgreen.svg) [![Join the chat at https://gitter.im/gaoxianglong/shark](https://badges.gitter.im/gaoxianglong/shark.svg)](https://gitter.im/gaoxianglong/shark?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-云集分布式全链路压测军演系统具备强大的分布式压测能力，能够在短时间内发起超大规模的压测流量，使用TITAN能够快速挖掘出业务系统的性能瓶颈，探测出业务系统的真实容量水位，有指导的在大促前进行容量规划，让系统坚如磐石。
+云集全链路压测军演系统具备强大的分布式压测能力，**能够在短时间内发起超大规模的压测流量**，使用TITAN能够快速挖掘出业务系统的性能瓶颈，探测出业务系统的真实容量水位，有指导的在大促前进行容量规划，让系统坚如磐石。
 
 - [中文使用手册](https://)<br>
 - [安装部署手册](https://)<br>
@@ -29,11 +29,11 @@
 
 ## 整体架构
 TITAN整体由如下5部分子系统构成：
-- Manager：管理控制台，负责链路、场景等相关信息管理，以及获取压测的业务指标数据与监控指标数据；
-- TaskService：负责具体的压测任务编排工作，并将压测任务信息下发给空闲Agent；
-- Agent：压测引擎，向ZK注册心跳、获取压测任务并执行；
-- Monitor：负责收集压测引擎、目标机器的CPU、内存、磁盘IOPS等监控指标数据；
-- DataCollect：负责收集压测数据并实施上报；
+- **Manager**：管理控制台，负责链路、场景等相关信息管理，以及获取压测的业务指标数据与监控指标数据；
+- **TaskService**：负责具体的压测任务编排工作，并将压测任务信息下发给空闲Agent；
+- **Agent**：压测引擎，向ZK注册心跳、获取压测任务并执行；
+- **Monitor**：负责收集压测引擎、目标机器的CPU、内存、磁盘IOPS等监控指标数据；
+- **DataCollect**：负责收集压测数据并实施上报；
 
 ![](http://dl.iteye.com/upload/picture/pic/137639/7880c09c-3490-3358-a4e4-dab919854624.jpg)
 
