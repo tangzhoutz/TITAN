@@ -51,3 +51,9 @@ TITAN整体由如下5部分子系统构成：
 - issues：https://github.com/yunjiweidian/TITAN/issues
 - email：gaoxl@yunjiweidian.com
 - QQ Group：574295338
+
+## 法律问题
+如果您觉得我们项目中有侵犯您权利的地方，请联系我们的临时工:
+![](http://dl.iteye.com/upload/picture/pic/137677/1d1bcd13-f3b2-3c16-a990-6418e2382e09.jpg)
+部门：深圳研发中心
+电话：暂不公开
