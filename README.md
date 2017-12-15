@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/%20license-GNU%20General%20Public%20License%20v3.0-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.en.html) ![](https://img.shields.io/badge/%20build-passing-brightgreen.svg) [![Join the chat at https://gitter.im/gaoxianglong/shark](https://badges.gitter.im/gaoxianglong/shark.svg)](https://gitter.im/gaoxianglong/shark?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-云集全链路压测军演系统具备强大的分布式压测能力，**能够在短时间内发起超大规模的压测流量**，使用TITAN能够快速挖掘出业务系统的性能瓶颈，探测出业务系统的真实容量水位，有指导的在大促前进行容量规划，让系统坚如磐石。
+云集全链路压测军演系统具备强大的分布式压测能力，**能够在短时间内发起超大规模的压测流量**，使用TITAN能够快速挖掘出业务系统的性能瓶颈，探测出业务系统的真实容量水位，有指导的在大促前进行容量规划和性能优化，让系统坚如磐石。
 
 - [中文使用手册](https://github.com/yunjiweidian/TITAN/wiki/%E4%B8%AD%E6%96%87%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)<br>
 - [安装部署手册](https://github.com/yunjiweidian/TITAN/wiki/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C)<br>
