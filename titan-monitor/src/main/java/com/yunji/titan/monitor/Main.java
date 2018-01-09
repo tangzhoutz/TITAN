@@ -33,8 +33,12 @@ public class Main {
 		new Main();
 	}
 
-	@SuppressWarnings("resource")
 	Main() {
+		init();
+	}
+
+	@SuppressWarnings("resource")
+	public void init() {
 		new ClassPathXmlApplicationContext("classpath:*-context.xml");
 		logger.info("titan-monitor启动成功...");
 		try {

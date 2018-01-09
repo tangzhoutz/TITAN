@@ -65,7 +65,7 @@
 			<bean class="com.yunji.titan.manager.interceptor.LoginInterceptor">
 				<property name="uncheckUrls">
 					<list> 
-						<value>/titan-manager/user/login</value>
+						<value>/user/login</value>
 					</list>
 				</property>
 			</bean>

@@ -68,7 +68,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object arg2) throws Exception {
 		//1、获取请求的参数
-		String requestUrl = request.getRequestURI(); 
+		String requestUrl = request.getServletPath(); 
 		String ticket = CookieUtil.getCookieValueByName(request,TitanConstant.TICKET_PREFIX);
 		//2、验证url
 		if((null != uncheckUrls) && (0 < uncheckUrls.size()) && (uncheckUrls.contains(requestUrl))){

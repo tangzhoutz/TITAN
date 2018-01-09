@@ -13,7 +13,7 @@ for i in `seq 1 $AGENT_NUM`
 do
         for address in ${AGENT_ADDRESS[*]}
         do
-                nohup ssh root@$address "cd /usr/local/yunji/titan-agent; sh start.sh &" >/dev/null 2>log &
+                nohup ssh root@$address "cd /usr/local/yunji/titan-agent*; sh start.sh &" >/dev/null 2>log &
         done
 done
 sleep 5

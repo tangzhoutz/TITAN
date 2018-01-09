@@ -9,7 +9,7 @@
 	</appender>
 	<!-- 按天生成日志文件 -->
 	<appender name="activexAppender" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/usr/local/yunji/titan-task/logs/titan-task.log" />
+		<param name="File" value="${log_dir}/titan-task.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
