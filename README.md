@@ -6,6 +6,7 @@
 
 - [中文使用手册](https://github.com/yunjiweidian/TITAN/wiki/%E4%B8%AD%E6%96%87%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)<br>
 - [安装部署手册](https://github.com/yunjiweidian/TITAN/wiki/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C)<br>
+- [InfoQ架构文稿](http://www.infoq.com/cn/articles/yunjiweidian-12.12)<br>
 
 ----------
 
