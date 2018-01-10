@@ -45,7 +45,7 @@ public interface ResultTemplate<T, E> {
 	 * @return Result<T>
 	 */
 	default Result<T> getResult(E param) {
-		Result<T> result = null;
+		Result<T> result = new Result<>();
 		try {
 			result = invoke(param);
 		} catch (ResourceException e) {
