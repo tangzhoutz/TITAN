@@ -82,7 +82,7 @@ public class HttpPostRequestStresstest extends BaseStresstestAdapter {
 				if (null != httpClient) {
 					HttpPost request = new HttpPost(UrlEncoder.encode(url));
 					/* 组装参数 */
-					setEntity(request, param, contentType, charset);
+					setEntity(request, param, charset);
 					/* 设置请求头 */
 					ParamUtils.setHeader(request, headers, contentType, charset);
 					httpResponse = httpClient.execute(request);
@@ -114,6 +114,21 @@ public class HttpPostRequestStresstest extends BaseStresstestAdapter {
 	 * @author gaoxianglong
 	 * @throws UnsupportedEncodingException
 	 */
+	private void setEntity(HttpPost request, String param, String charset) throws UnsupportedEncodingException {
+		if (StringUtils.isEmpty(param)) {
+			return;
+		}
+		request.setEntity(new StringEntity(param, charset));
+	}
+
+	/**
+	 * 组装参数(过时,推荐使用setEntity(HttpPost request, String param, String charset))
+	 * 
+	 * @author gaoxianglong
+	 * @throws UnsupportedEncodingException
+	 */
+	@SuppressWarnings("unused")
+	@Deprecated
 	private void setEntity(HttpPost request, String param, ContentType contentType, String charset)
 			throws UnsupportedEncodingException {
 		if (StringUtils.isEmpty(param)) {
