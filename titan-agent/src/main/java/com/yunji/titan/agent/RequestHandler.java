@@ -166,10 +166,6 @@ public class RequestHandler {
 		}
 	}
 
-	public static void main(String[] agrs) {
-		System.out.println("REM_CONCURRENTUSERS_SIZE".toLowerCase());
-	}
-
 	/**
 	 * 执行压测任务
 	 * 

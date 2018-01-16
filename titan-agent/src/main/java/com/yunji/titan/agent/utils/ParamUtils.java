@@ -38,6 +38,12 @@ import com.yunji.titan.utils.ContentType;
 public class ParamUtils {
 	private static Logger log = LoggerFactory.getLogger(ParamUtils.class);
 
+	/**
+	 * 此方法废弃,提供参数解释器AbstractExpression
+	 * 
+	 * @author gaoxianglong
+	 */
+	@Deprecated
 	public static Map<String, String> resolve(String param) {
 		String[] params = null;
 		if (StringUtils.isEmpty(param)) {

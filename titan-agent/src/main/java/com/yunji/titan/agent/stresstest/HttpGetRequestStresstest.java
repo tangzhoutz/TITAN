@@ -33,6 +33,8 @@ import org.springframework.util.StringUtils;
 import com.yunji.titan.agent.adapter.BaseStresstestAdapter;
 import com.yunji.titan.agent.bean.bo.OutParamBO;
 import com.yunji.titan.agent.config.HttpConnectionManager;
+import com.yunji.titan.agent.interpreter.param.AbstractExpression;
+import com.yunji.titan.agent.interpreter.param.ParamContext;
 import com.yunji.titan.agent.utils.ParamUtils;
 import com.yunji.titan.utils.ContentType;
 
@@ -45,6 +47,10 @@ import com.yunji.titan.utils.ContentType;
 public class HttpGetRequestStresstest extends BaseStresstestAdapter {
 	@Resource
 	public HttpConnectionManager httpConnectionManager;
+	@Resource(name = "headerExpression")
+	private AbstractExpression headerExpression;
+	@Resource(name = "paramExpression")
+	private AbstractExpression paramExpression;
 	private Logger log = LoggerFactory.getLogger(HttpGetRequestStresstest.class);
 
 	@Override
@@ -55,13 +61,11 @@ public class HttpGetRequestStresstest extends BaseStresstestAdapter {
 			HttpEntity entity = null;
 			CloseableHttpClient httpClient = null;
 			CloseableHttpResponse httpResponse = null;
-			String headers = null;
-			/* 解析动态参数和头信息 */
-			Map<String, String> map = ParamUtils.resolve(param);
-			if (null != map && !map.isEmpty()) {
-				param = map.get("param");
-				headers = map.get("headers");
-			}
+			/* 解析参数 */
+			ParamContext context = new ParamContext();
+			context.setParams(param);
+			param = paramExpression.get(context);
+			String header = headerExpression.get(context);
 			/* 将上一个接口的出参作为下一个接口的入参拼接 */
 			if (!StringUtils.isEmpty(outParam)) {
 				String value = ParamUtils.jsonToUrl(param, outParam);
@@ -74,7 +78,7 @@ public class HttpGetRequestStresstest extends BaseStresstestAdapter {
 					HttpGet request = new HttpGet(
 							com.yunji.titan.utils.UrlEncoder.encode(null != param ? url + param : url));
 					/* 设置请求头 */
-					ParamUtils.setHeader(request, headers, contentType, charset);
+					ParamUtils.setHeader(request, header, contentType, charset);
 					httpResponse = httpClient.execute(request);
 					entity = httpResponse.getEntity();
 					/* 获取压测执行结果 */
