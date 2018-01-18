@@ -31,9 +31,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Resource;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -47,7 +45,6 @@ import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSON;
 import com.yunji.titan.agent.state.AgentStateContext;
 import com.yunji.titan.agent.state.BusynessState;
@@ -62,7 +59,6 @@ import com.yunji.titan.task.exception.StopPerformanceTestException;
 import com.yunji.titan.task.service.info.AgentInfoService;
 import com.yunji.titan.task.watch.WatchAgents;
 import com.yunji.titan.utils.AgentTaskBean;
-import com.yunji.titan.utils.AgentType;
 import com.yunji.titan.utils.ContentType;
 import com.yunji.titan.utils.ErrorCode;
 import com.yunji.titan.utils.NodePath;
@@ -71,7 +67,6 @@ import com.yunji.titan.utils.RequestType;
 import com.yunji.titan.utils.TaskIssuedBean;
 import com.yunji.titan.utils.ZookeeperConnManager;
 import com.yunji.titan.utils.ftp.FtpUtils;
-
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -148,7 +143,9 @@ public class TaskServiceImpl implements TaskService {
 				taskIssuedBean.getProtocolTypes(), taskIssuedBean.getContentTypes(), taskIssuedBean.getCharsets());
 		/* 为每一个场景的压测任务分配一个唯一的任务ID */
 		String taskId = UUID.randomUUID().toString();
-		taskMap.forEach((znode, taskBean) -> {
+		/* 通过并行流方式加速任务下发,加速压测预热过程 */
+		taskMap.keySet().parallelStream().forEach(znode -> {
+			AgentTaskBean taskBean = taskMap.get(znode);
 			taskBean.setTaskId(taskId);
 			/* 每个agent分配的起步量级并发用户数 */
 			taskBean.setInitConcurrentUsersSize(
@@ -293,7 +290,8 @@ public class TaskServiceImpl implements TaskService {
 		Map<String, Integer> endIndex = new ConcurrentHashMap<String, Integer>(16);
 		for (int i = 0; i < agentSize; i++) {
 			AgentTaskBean taskBean = new AgentTaskBean();
-			urls.stream().forEach(url -> {
+			/* 通过并行流加速压测任务编排 */
+			urls.parallelStream().forEach(url -> {
 				if (null != params) {
 					/* 获取manager下发的一个url包含的完整动态参数集合 */
 					List<String> param = params.get(url);
@@ -346,7 +344,8 @@ public class TaskServiceImpl implements TaskService {
 		if (!znodes.isEmpty()) {
 			ZooKeeper zkClient = zookeeperConnManager.getZkClient();
 			try {
-				znodes.stream().forEach(znode -> {
+				/* 通过并行流加速暂停任务下发 */
+				znodes.parallelStream().forEach(znode -> {
 					try {
 						String value = new String(zkClient.getData(znode, false, null));
 						if (null != value) {
