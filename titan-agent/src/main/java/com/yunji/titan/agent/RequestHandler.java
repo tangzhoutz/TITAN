@@ -191,6 +191,7 @@ public class RequestHandler {
 					String outParam = null;
 					boolean result = true;
 					for (String url : urls) {
+						Stresstest stresstest = null;
 						String inParam = null;
 						OutParamBO outParamBO = null;
 						if (taskBean.getParams().containsKey(url)) {
@@ -203,16 +204,16 @@ public class RequestHandler {
 						}
 						switch (requestTypes.get(url)) {
 						case GET:
-							outParamBO = httpGetRequestStresstest.runGetStresstest(url, outParam, inParam,
-									contentTypes.get(url), charsets.get(url));
+							stresstest = httpGetRequestStresstest;
 							break;
 						case POST:
-							outParamBO = httpPostRequestStresstest.runPostStresstest(url, outParam, inParam,
-									contentTypes.get(url), charsets.get(url));
+							stresstest = httpPostRequestStresstest;
 							break;
 						default:
 							break;
 						}
+						outParamBO = stresstest.runGetStresstest(url, outParam, inParam, contentTypes.get(url),
+								charsets.get(url));
 						code = outParamBO.getErrorCode();
 						/* 返回业务码不为${code}则失败 */
 						if (Integer.parseInt(this.code) != code) {
