@@ -48,7 +48,7 @@ import com.yunji.titan.utils.ThreadPoolManager;
 import com.yunji.titan.utils.ZookeeperConnManager;
 
 /**
- * 请求处理者
+ * 请求处理者实现
  * 
  * @author gaoxianglong
  */
@@ -82,6 +82,7 @@ public class RequestHandler {
 
 	public RequestHandler() {
 		concurrentUser = new AtomicInteger(0);
+
 	}
 
 	public void handler(final String nodePath, final AgentTaskBean taskBean) {
@@ -190,44 +191,37 @@ public class RequestHandler {
 					String outParam = null;
 					boolean result = true;
 					for (String url : urls) {
-						if (RequestType.GET == requestTypes.get(url)) {
-							String inParam = null;
-							if (taskBean.getParams().containsKey(url)) {
-								List<String> params = taskBean.getParams().get(url);
-								if (!params.isEmpty()) {
-									/* 获取压测参数索引 */
-									int paramIdex = getParamIndex(taskBean, url, paramIndex, params.size());
-									inParam = params.get(paramIdex);
-								}
+						String inParam = null;
+						OutParamBO outParamBO = null;
+						if (taskBean.getParams().containsKey(url)) {
+							List<String> params = taskBean.getParams().get(url);
+							if (!params.isEmpty()) {
+								/* 获取压测参数索引 */
+								int paramIdex = getParamIndex(taskBean, url, paramIndex, params.size());
+								inParam = params.get(paramIdex);
 							}
-							OutParamBO outParamBO = httpGetRequestStresstest.runGetStresstest(url, outParam, inParam,
-									contentTypes.get(url), charsets.get(url));
-							code = outParamBO.getErrorCode();
-							/* 返回业务码不为${code}则失败 */
-							if (Integer.parseInt(this.code) != code) {
-								result = false;
-								break;
-							}
-							outParam = outParamBO.getData();
-						} else if (RequestType.POST == requestTypes.get(url)) {
-							String inParam = null;
-							if (taskBean.getParams().containsKey(url)) {
-								List<String> params = taskBean.getParams().get(url);
-								if (!params.isEmpty()) {
-									int paramIdex = getParamIndex(taskBean, url, paramIndex, params.size());
-									inParam = params.get(paramIdex);
-								}
-							}
-							OutParamBO outParamBean = httpPostRequestStresstest.runPostStresstest(url, outParam,
-									inParam, contentTypes.get(url), charsets.get(url));
-							code = outParamBean.getErrorCode();
-							if (0 != code) {
-								result = false;
-								break;
-							}
-							outParam = outParamBean.getData();
 						}
+						switch (requestTypes.get(url)) {
+						case GET:
+							outParamBO = httpGetRequestStresstest.runGetStresstest(url, outParam, inParam,
+									contentTypes.get(url), charsets.get(url));
+							break;
+						case POST:
+							outParamBO = httpPostRequestStresstest.runPostStresstest(url, outParam, inParam,
+									contentTypes.get(url), charsets.get(url));
+							break;
+						default:
+							break;
+						}
+						code = outParamBO.getErrorCode();
+						/* 返回业务码不为${code}则失败 */
+						if (Integer.parseInt(this.code) != code) {
+							result = false;
+							break;
+						}
+						outParam = outParamBO.getData();
 					}
+					/* 检测一次链路的压测结果 */
 					if (result) {
 						httpSuccessNum.getAndIncrement();
 						serviceSuccessNum.getAndIncrement();
