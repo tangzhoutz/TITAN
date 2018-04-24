@@ -212,7 +212,7 @@ public class RequestHandler {
 						default:
 							break;
 						}
-						outParamBO = stresstest.runGetStresstest(url, outParam, inParam, contentTypes.get(url),
+						outParamBO = stresstest.runStresstest(url, outParam, inParam, contentTypes.get(url),
 								charsets.get(url));
 						code = outParamBO.getErrorCode();
 						/* 返回业务码不为${code}则失败 */

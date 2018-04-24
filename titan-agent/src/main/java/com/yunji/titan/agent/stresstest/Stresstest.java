@@ -36,7 +36,7 @@ public interface Stresstest {
 	public Logger log = LoggerFactory.getLogger(Stresstest.class);
 
 	/**
-	 * 执行GET请求类型压测
+	 * 执行压测
 	 * 
 	 * @author gaoxianglong
 	 * 
@@ -59,35 +59,7 @@ public interface Stresstest {
 	 * 
 	 * @return OutParamBO 压测结果,返回业务code为0时则成功
 	 */
-	public OutParamBO runGetStresstest(String url, String outParam, String param, ContentType contentType,
-			String charset);
-
-	/**
-	 * 执行POST请求类型压测
-	 * 
-	 * @author gaoxianglong
-	 * 
-	 * @param url
-	 *            需要进行压测的URL
-	 * 
-	 * @param outParam
-	 *            上一个接口的出参
-	 * 
-	 * @param param
-	 *            表单参数或者JSON参数
-	 * 
-	 * @param contentType
-	 *            内容类型
-	 * 
-	 * @param charset
-	 *            编码格式
-	 * 
-	 * @exception Exception,IOException
-	 * 
-	 * @return OutParamBO 压测结果,返回业务code为0时则成功
-	 */
-	public OutParamBO runPostStresstest(String url, String outParam, String param, ContentType contentType,
-			String charset);
+	public OutParamBO runStresstest(String url, String outParam, String param, ContentType contentType, String charset);
 
 	/**
 	 * 获取执行结果

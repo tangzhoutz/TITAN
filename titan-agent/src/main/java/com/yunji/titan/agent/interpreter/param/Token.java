@@ -24,4 +24,12 @@ package com.yunji.titan.agent.interpreter.param;
 public final class Token {
 	public static String SEPARATOR = "(%%%)";
 	public static String HEADER = "header";
+	public static String DOLLAR = "$";
+	public static String OPEN_BRACE = "{";
+	public static String CLOSE_BRACE = "}";
+	public static String AMPERSAND = "&";
+	public static String EQUAL = "=";
+	public static String APOSTROPHE = "'";
+	public static String COLON = ":";
+	public static String COMMA = ",";
 }

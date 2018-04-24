@@ -21,10 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -37,14 +34,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import com.yunji.titan.agent.adapter.BaseStresstestAdapter;
 import com.yunji.titan.agent.bean.bo.OutParamBO;
 import com.yunji.titan.agent.config.HttpConnectionManager;
 import com.yunji.titan.agent.interpreter.param.AbstractExpression;
 import com.yunji.titan.agent.interpreter.param.ParamContext;
 import com.yunji.titan.agent.utils.ParamUtils;
+import com.yunji.titan.agent.utils.PropertyResolver;
 import com.yunji.titan.utils.ContentType;
+import com.yunji.titan.utils.RequestType;
 import com.yunji.titan.utils.UrlEncoder;
 
 /**
@@ -53,7 +50,7 @@ import com.yunji.titan.utils.UrlEncoder;
  * @author gaoxianglong
  */
 @Service("httpPostRequestStresstest")
-public class HttpPostRequestStresstest extends BaseStresstestAdapter {
+public class HttpPostRequestStresstest implements Stresstest {
 	@Resource
 	public HttpConnectionManager httpConnectionManager;
 	@Resource(name = "headerExpression")
@@ -63,7 +60,7 @@ public class HttpPostRequestStresstest extends BaseStresstestAdapter {
 	private Logger log = LoggerFactory.getLogger(HttpPostRequestStresstest.class);
 
 	@Override
-	public OutParamBO runPostStresstest(String url, String outParam, String param, ContentType contentType,
+	public OutParamBO runStresstest(String url, String outParam, String param, ContentType contentType,
 			String charset) {
 		OutParamBO outParamBO = new OutParamBO();
 		if (!StringUtils.isEmpty(url)) {
@@ -74,12 +71,14 @@ public class HttpPostRequestStresstest extends BaseStresstestAdapter {
 			context.setParams(param);
 			param = paramExpression.get(context);
 			String header = headerExpression.get(context);
-			/* 将上一个接口的出参作为下一个接口的入参拼接 */
+			/* 将上一个接口的出参作为下一个接口的指定入参 */
 			if (!StringUtils.isEmpty(outParam) && contentType == ContentType.APPLICATION_JSON) {
-				String value = ParamUtils.jsonCombination(param, outParam);
-				/* JSON合并操作 */
-				param = StringUtils.isEmpty(value) ? param : value;
-				log.debug("JSON合并后的参数-->" + param);
+				log.debug("BEFORE" + param);
+				param = PropertyResolver.resolver(param, outParam, RequestType.POST);
+				// String value = ParamUtils.jsonCombination(param, outParam);
+				// /* JSON合并操作 */
+				// param = StringUtils.isEmpty(value) ? param : value;
+				log.debug("AFTER:" + param);
 			}
 			try {
 				CloseableHttpClient httpClient = httpConnectionManager.getHttpClient();
@@ -92,7 +91,7 @@ public class HttpPostRequestStresstest extends BaseStresstestAdapter {
 					httpResponse = httpClient.execute(request);
 					entity = httpResponse.getEntity();
 					/* 获取压测执行结果 */
-					outParamBO = super.getResult(httpResponse, entity);
+					outParamBO = getResult(httpResponse, entity);
 				}
 			} catch (Exception e) {
 				// ...
